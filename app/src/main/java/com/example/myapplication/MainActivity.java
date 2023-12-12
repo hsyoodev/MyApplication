@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                         editText.setText(toc.get("id").toString());
                     }
                 });
-//                progressDialog.dismiss();
+                progressDialog.dismiss();
 
             } catch (URISyntaxException e) {
                 throw new RuntimeException(e);
