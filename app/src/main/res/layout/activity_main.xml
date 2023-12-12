@@ -2,25 +2,63 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center">
 
-    <Button
-        android:layout_gravity="center_horizontal"
-        android:gravity="right|top"
-        android:text="button 1"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <Button
-        android:text="button 2"
-        android:gravity="left|center"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
+        <Button
+            android:text="button 1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-    <Button
-        android:text="button 3"
-        android:layout_gravity="end"
-        android:gravity="right|bottom"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
+        <Button
+            android:text="button 2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:background="#4CAF50"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <Button
+            android:layout_weight="1"
+            android:text="button 1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:layout_weight="1"
+            android:text="button 2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:background="#0000ff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <Button
+            android:text="button 1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:text="button 2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </LinearLayout>
