@@ -2,8 +2,10 @@ package com.example.myapplication;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     CheckBox android;
     CheckBox apple;
     ToggleButton toggleButton;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,17 +25,20 @@ public class MainActivity extends AppCompatActivity {
         android = findViewById(R.id.android);
         apple = findViewById(R.id.apple);
         toggleButton = findViewById(R.id.toggle);
+        imageView = findViewById(R.id.image);
 
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Log.e("toggle", String.valueOf(isChecked));
                 if (isChecked) {
-                    android.setChecked(false);
-                    apple.setChecked(false);
-                } else {
+                    imageView.setVisibility(View.VISIBLE);
                     android.setChecked(true);
                     apple.setChecked(true);
+                } else {
+                    imageView.setVisibility(View.GONE);
+                    android.setChecked(false);
+                    apple.setChecked(false);
                 }
             }
         });
