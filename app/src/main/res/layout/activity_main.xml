@@ -2,52 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="20dp">
 
-    <!--    <EditText-->
-    <!--        android:id="@+id/editText"-->
-    <!--        android:text="안녕하세요?"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content" />-->
+    <CheckBox
+        android:id="@+id/android"
+        android:text="안드로이드폰"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-    <!--    <Button-->
-    <!--        android:id="@+id/button1"-->
-    <!--        android:text="글자 나타내기"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content" />-->
+    <CheckBox
+        android:id="@+id/apple"
+        android:text="아이폰"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-    <!--    <Button-->
-    <!--        android:id="@+id/button2"-->
-    <!--        android:text="홈페이지 나타내기"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content" />-->
-
-    <!--    <RadioGroup-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content">-->
-
-    <!--        <RadioButton-->
-    <!--            android:id="@+id/radioButton1"-->
-    <!--            android:text="12.0 (snow)"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content" />-->
-
-    <!--        <RadioButton-->
-    <!--            android:id="@+id/radioButton2"-->
-    <!--            android:text="13.0 (tiramisu)"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content" />-->
-    <!--    </RadioGroup>-->
-
-    <!--    <ImageView-->
-    <!--        android:id="@+id/imageView"-->
-    <!--        android:src="@drawable/tiramisu01"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content" />-->
-
-    <TextView
-        android:text="dasdasdsdsdsdsdsds"
-        android:background="@drawable/snow_corn9patch"
+    <ImageView
+        android:src="@drawable/balloon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>
