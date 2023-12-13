@@ -12,37 +12,38 @@
 
     <Button
         android:layout_alignTop="@id/standartWidget"
-        android:layout_toLeftOf="@id/standartWidget"
+        android:layout_alignParentLeft="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <Button
-        android:layout_alignBaseline="@id/standartWidget"
-        android:layout_toLeftOf="@id/standartWidget"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
     <Button
         android:layout_alignBottom="@id/standartWidget"
-        android:layout_toLeftOf="@id/standartWidget"
+        android:layout_alignParentLeft="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <Button
-        android:layout_above="@id/standartWidget"
         android:layout_alignLeft="@id/standartWidget"
+        android:layout_alignParentTop="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <Button
-        android:layout_toRightOf="@id/standartWidget"
+        android:layout_toLeftOf="@id/standartWidget"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_alignParentRight="true"
         android:layout_above="@id/standartWidget"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <Button
         android:layout_alignRight="@id/standartWidget"
-        android:layout_below="@id/standartWidget"
+        android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </RelativeLayout>
