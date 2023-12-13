@@ -4,36 +4,45 @@
     android:layout_height="match_parent">
 
     <Button
-        android:layout_centerHorizontal="true"
-        android:text="hello2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:layout_centerVertical="true"
-        android:text="hello2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
+        android:id="@+id/standartWidget"
         android:layout_centerInParent="true"
-        android:text="hello2"
+        android:text="기준위젯"
+        android:layout_width="150dp"
+        android:layout_height="150dp" />
+
+    <Button
+        android:layout_alignTop="@id/standartWidget"
+        android:layout_toLeftOf="@id/standartWidget"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <Button
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:text="hello2"
+        android:layout_alignBaseline="@id/standartWidget"
+        android:layout_toLeftOf="@id/standartWidget"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:layout_alignBottom="@id/standartWidget"
+        android:layout_toLeftOf="@id/standartWidget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <Button
-        android:text="hello2"
+        android:layout_above="@id/standartWidget"
+        android:layout_alignLeft="@id/standartWidget"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_height="wrap_content" />
 
+    <Button
+        android:layout_toRightOf="@id/standartWidget"
+        android:layout_above="@id/standartWidget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_alignRight="@id/standartWidget"
+        android:layout_below="@id/standartWidget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </RelativeLayout>
