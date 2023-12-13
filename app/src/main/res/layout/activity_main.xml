@@ -4,39 +4,72 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <EditText
-        android:hint="숫자를 입력해주세요."
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:hint="숫자를 입력해주세요."
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/a"
+            android:src="@mipmap/ic_launcher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="5">
+        <ImageView
+            android:id="@+id/b"
+            android:src="@android:drawable/alert_light_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-        <Button android:text="0" />
+        <ImageView
+            android:id="@+id/c"
+            android:src="@android:drawable/zoom_plate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
 
-        <Button android:text="1" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <Button android:text="2" />
+        <ImageView
+            android:id="@+id/aa"
+            android:src="@mipmap/ic_launcher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-        <Button android:text="3" />
+        <ImageView
+            android:id="@+id/bb"
+            android:src="@android:drawable/alert_light_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-        <Button android:text="4" />
+        <ImageView
+            android:id="@+id/cc"
+            android:src="@android:drawable/zoom_plate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 
-        <Button android:text="5" />
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <Button android:text="6" />
+        <RadioButton
+            android:id="@+id/btn_a"
+            android:text="A"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-        <Button android:text="7" />
+        <RadioButton
+            android:id="@+id/btn_b"
+            android:text="B"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-        <Button android:text="8" />
-
-        <Button android:text="9" />
-    </GridLayout>
+        <RadioButton
+            android:id="@+id/btn_c"
+            android:text="C"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RadioGroup>
 </LinearLayout>
