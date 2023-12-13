@@ -3,47 +3,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/standartWidget"
-        android:layout_centerInParent="true"
-        android:text="기준위젯"
-        android:layout_width="150dp"
-        android:layout_height="150dp" />
-
-    <Button
-        android:layout_alignTop="@id/standartWidget"
-        android:layout_alignParentLeft="true"
+    <TextView
+        android:id="@+id/tel"
+        android:textSize="30sp"
+        android:text="전화번호"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-
-    <Button
-        android:layout_alignBottom="@id/standartWidget"
-        android:layout_alignParentLeft="true"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/input"
+        android:layout_toRightOf="@id/tel"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <Button
-        android:layout_alignLeft="@id/standartWidget"
-        android:layout_alignParentTop="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:layout_toLeftOf="@id/standartWidget"
-        android:layout_alignParentBottom="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
+        android:id="@+id/cancel"
+        android:layout_below="@id/input"
         android:layout_alignParentRight="true"
-        android:layout_above="@id/standartWidget"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <Button
-        android:layout_alignRight="@id/standartWidget"
-        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/cancel"
+        android:layout_below="@id/input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
 </RelativeLayout>
