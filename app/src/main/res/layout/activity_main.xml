@@ -2,74 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="#ff00fd"
+    android:gravity="center">
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/c"
+        android:background="#0000ff"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:gravity="center">
 
-        <ImageView
-            android:id="@+id/a"
-            android:src="@mipmap/ic_launcher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <ImageView
+        <LinearLayout
             android:id="@+id/b"
-            android:src="@android:drawable/alert_light_frame"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:gravity="center"
+            android:background="#ffff00"
+            android:layout_width="150dp"
+            android:layout_height="150dp">
 
-        <ImageView
-            android:id="@+id/c"
-            android:src="@android:drawable/zoom_plate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </FrameLayout>
+            <LinearLayout
+                android:id="@+id/a"
+                android:background="#000000"
+                android:layout_width="50dp"
+                android:layout_height="50dp">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/aa"
-            android:src="@mipmap/ic_launcher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/bb"
-            android:src="@android:drawable/alert_light_frame"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/cc"
-            android:src="@android:drawable/zoom_plate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
-
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <RadioButton
-            android:id="@+id/btn_a"
-            android:text="A"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <RadioButton
-            android:id="@+id/btn_b"
-            android:text="B"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <RadioButton
-            android:id="@+id/btn_c"
-            android:text="C"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RadioGroup>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
