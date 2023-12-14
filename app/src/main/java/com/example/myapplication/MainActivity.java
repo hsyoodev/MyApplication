@@ -1,33 +1,38 @@
 package com.example.myapplication;
 
-import android.app.TabActivity;
 import android.os.Bundle;
-import android.widget.TabHost;
-import android.widget.TabHost.TabSpec;
+import android.view.View;
+import android.widget.Button;
 
-@SuppressWarnings("deprecation")
-public class MainActivity extends TabActivity {
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+public class MainActivity extends AppCompatActivity {
+    FragmentManager fm; // android.support.v4.app.FragmentManager
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        TabHost tabHost = getTabHost();
-
-        TabSpec tabSpecSong = tabHost.newTabSpec("SONG").setIndicator("음악별");
-        tabSpecSong.setContent(R.id.tabSong);
-        tabHost.addTab(tabSpecSong);
-
-        TabSpec tabSpecArtist = tabHost.newTabSpec("ARTIST")
-                .setIndicator("가수별");
-        tabSpecArtist.setContent(R.id.tabArtist);
-        tabHost.addTab(tabSpecArtist);
-
-        TabSpec tabSpecAlbum = tabHost.newTabSpec("ALBUM").setIndicator("앨범별");
-        tabSpecAlbum.setContent(R.id.tabAlbum);
-        tabHost.addTab(tabSpecAlbum);
-
-        tabHost.setCurrentTab(0);
+        fm = getSupportFragmentManager();
+        Button btnFirst = (Button) findViewById(R.id.btn_first);
+        Button btnSecond = (Button) findViewById(R.id.btn_second);
+        btnFirst.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fm.beginTransaction().replace(
+                        R.id.layout_fragment, new FirstFragment()).commit();
+            }
+        });
+        btnSecond.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // android.support.v4.app.FragmentTransaction
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.layout_fragment, new SecondFragment());
+                ft.commit();
+            }
+        });
     }
 }
