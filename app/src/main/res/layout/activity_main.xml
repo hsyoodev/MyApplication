@@ -9,18 +9,18 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnPrev"
+            android:id="@+id/start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" 이전화면 " />
+            android:text=" 시작하기 " />
 
         <Button
-            android:id="@+id/btnNext"
+            android:id="@+id/stop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" 다음화면 " />
+            android:text=" 중지하기 " />
     </LinearLayout>
 
     <ViewFlipper

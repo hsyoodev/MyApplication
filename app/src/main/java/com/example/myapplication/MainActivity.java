@@ -14,25 +14,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btnPrev, btnNext;
+        Button start, stop;
         final ViewFlipper vFlipper;
 
-        btnPrev = (Button) findViewById(R.id.btnPrev);
-        btnNext = (Button) findViewById(R.id.btnNext);
+        start = (Button) findViewById(R.id.start);
+        stop = (Button) findViewById(R.id.stop);
 
         vFlipper = (ViewFlipper) findViewById(R.id.viewFlipper1);
         vFlipper.setFlipInterval(1000);
-        vFlipper.setAutoStart(true);
 
-        btnPrev.setOnClickListener(new View.OnClickListener() {
+        start.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                vFlipper.showPrevious();
+                if (!vFlipper.isFlipping()) {
+                    vFlipper.startFlipping();
+                }
             }
         });
 
-        btnNext.setOnClickListener(new View.OnClickListener() {
+        stop.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                vFlipper.showNext();
+                if (vFlipper.isFlipping()) {
+                    vFlipper.stopFlipping();
+                }
             }
         });
     }
