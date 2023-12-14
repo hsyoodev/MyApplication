@@ -1,42 +1,33 @@
 package com.example.myapplication;
 
+import android.app.TabActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ViewFlipper;
+import android.widget.TabHost;
+import android.widget.TabHost.TabSpec;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class MainActivity extends AppCompatActivity {
+@SuppressWarnings("deprecation")
+public class MainActivity extends TabActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button start, stop;
-        final ViewFlipper vFlipper;
+        TabHost tabHost = getTabHost();
 
-        start = (Button) findViewById(R.id.start);
-        stop = (Button) findViewById(R.id.stop);
+        TabSpec tabSpecSong = tabHost.newTabSpec("SONG").setIndicator("음악별");
+        tabSpecSong.setContent(R.id.tabSong);
+        tabHost.addTab(tabSpecSong);
 
-        vFlipper = (ViewFlipper) findViewById(R.id.viewFlipper1);
-        vFlipper.setFlipInterval(1000);
+        TabSpec tabSpecArtist = tabHost.newTabSpec("ARTIST")
+                .setIndicator("가수별");
+        tabSpecArtist.setContent(R.id.tabArtist);
+        tabHost.addTab(tabSpecArtist);
 
-        start.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (!vFlipper.isFlipping()) {
-                    vFlipper.startFlipping();
-                }
-            }
-        });
+        TabSpec tabSpecAlbum = tabHost.newTabSpec("ALBUM").setIndicator("앨범별");
+        tabSpecAlbum.setContent(R.id.tabAlbum);
+        tabHost.addTab(tabSpecAlbum);
 
-        stop.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (vFlipper.isFlipping()) {
-                    vFlipper.stopFlipping();
-                }
-            }
-        });
+        tabHost.setCurrentTab(0);
     }
 }
