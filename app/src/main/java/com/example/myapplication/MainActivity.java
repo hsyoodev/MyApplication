@@ -1,39 +1,56 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
-    Button button;
-    WebView webView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        button = findViewById(R.id.button);
-        webView = findViewById(R.id.webview);
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
+        Button btnRead, btnWrite;
+        btnRead = (Button) findViewById(R.id.btnRead);
+        btnWrite = (Button) findViewById(R.id.btnWrite);
+
+        btnWrite.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                AlertDialog.Builder ab = new AlertDialog.Builder(MainActivity.this);
-                ab.setTitle("대화상자");
-                ab.setMessage("내용1dsdsdsdsdsdsds");
-                ab.setIcon(R.drawable.ic_launcher_background);
-                ab.setPositiveButton("확인", null);
-                ab.setNeutralButton("중립", null);
-                ab.setNegativeButton("취소", null);
-                ab.show();
+                try {
+                    FileOutputStream outFs = openFileOutput("file.txt",
+                            Context.MODE_PRIVATE);
+                    String str = "쿡북 안드로이드";
+                    outFs.write(str.getBytes());
+                    outFs.close();
+                    Toast.makeText(getApplicationContext(), "file.txt가 생성됨", Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                }
+            }
+        });
+
+        btnRead.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+                    FileInputStream inFs = openFileInput("file.txt");
+                    byte[] txt = new byte[30];
+                    inFs.read(txt);
+                    String str = new String(txt);
+                    Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+                    inFs.close();
+                } catch (IOException e) {
+                    Toast.makeText(getApplicationContext(), "파일 없음", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
+
 }
