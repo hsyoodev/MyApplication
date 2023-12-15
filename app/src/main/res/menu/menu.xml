@@ -1,0 +1,29 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemRed"
+        android:title="���� (����)"></item>
+
+    <item
+        android:id="@+id/itemGreen"
+        android:title="����(�ʷ�)"></item>
+
+    <item
+        android:id="@+id/itemBlue"
+        android:title="����(�Ķ�)"></item>
+
+    <item android:title="��ư ���� >> ">
+
+        <menu>
+
+            <item
+                android:id="@+id/subRotate"
+                android:title="��ư 45�� ȸ��" />
+
+            <item
+                android:id="@+id/subSize"
+                android:title="��ư 2�� Ȯ��" />
+        </menu>
+    </item>
+
+</menu>
