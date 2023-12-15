@@ -1,26 +1,30 @@
 package com.example.myapplication;
 
-import android.graphics.Color;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.LinearLayout;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    LinearLayout baseLayout;
-    Button button1;
+    RelativeLayout baseLayout;
+    EditText editText;
+    ImageView imageView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("배경색 바꾸기(컨텍스트 메뉴)");
-        baseLayout = (LinearLayout) findViewById(R.id.baseLayout);
-        button1 = (Button) findViewById(R.id.button1);
+        baseLayout = findViewById(R.id.baseLayout);
+        editText = findViewById(R.id.edtAngle);
+        imageView = findViewById(R.id.imageView1);
     }
 
     @Override
@@ -33,21 +37,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        item.setChecked(true);
         int itemId = item.getItemId();
-        if (itemId == R.id.itemRed) {
-            baseLayout.setBackgroundColor(Color.RED);
+        imageView.setRotation(Float.parseFloat(editText.getText().toString()));
+        InputMethodManager inputManager = (InputMethodManager) MainActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        if (itemId == R.id.item1) {
+            imageView.setImageResource(R.drawable.hanla);
             return true;
-        } else if (itemId == R.id.itemGreen) {
-            baseLayout.setBackgroundColor(Color.GREEN);
+        } else if (itemId == R.id.item2) {
+            imageView.setImageResource(R.drawable.chuja);
             return true;
-        } else if (itemId == R.id.itemBlue) {
-            baseLayout.setBackgroundColor(Color.BLUE);
-            return true;
-        } else if (itemId == R.id.subRotate) {
-            button1.setRotation(45);
-            return true;
-        } else if (itemId == R.id.subSize) {
-            button1.setScaleX(2);
+        } else if (itemId == R.id.item3) {
+            imageView.setImageResource(R.drawable.beom);
             return true;
         }
         return false;
