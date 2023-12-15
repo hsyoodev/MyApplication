@@ -18,7 +18,7 @@ public class MyFragment extends Fragment {
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_first, null);
+        View view = inflater.inflate(R.layout.fragment_my, null);
         ImageView image = view.findViewById(R.id.image);
         int resource = 0;
         if (this.animal.equals("cat")) {

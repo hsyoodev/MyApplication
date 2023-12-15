@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 public class MainActivity extends AppCompatActivity {
-    Button dog, cat;
+    Button cat, dog;
     FragmentManager fm;
 
     @Override
@@ -16,23 +16,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dog = findViewById(R.id.dog);
         cat = findViewById(R.id.cat);
-        fm = getSupportFragmentManager();
+        dog = findViewById(R.id.dog);
 
-        dog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fm.beginTransaction().replace(
-                        R.id.frame, new MyFragment("dog")).commit();
-            }
-        });
+        fm = getSupportFragmentManager();
 
         cat.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 fm.beginTransaction().replace(
-                        R.id.frame, new MyFragment("cat")).commit();
+                        R.id.layout, new MyFragment("cat")).commit();
+            }
+        });
+        dog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fm.beginTransaction().replace(
+                        R.id.layout, new MyFragment("dog")).commit();
             }
         });
     }
