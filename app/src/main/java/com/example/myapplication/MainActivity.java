@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -21,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageView;
     Button prev, next;
 
+    TextView textView;
+
     int num = 0;
 
     @Override
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
         prev = findViewById(R.id.prev);
         next = findViewById(R.id.next);
+        textView = findViewById(R.id.textView);
 
         String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
         ActivityCompat.requestPermissions(this, permissions, MODE_PRIVATE);
@@ -53,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         }
         imageView.setImageBitmap(bitmap);
 
+        textView.setText(String.format("%s / %s", num, list.length - 1));
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 imageView.setImageBitmap(bitmap);
+
+                textView.setText(String.format("%s / %s", num, list.length - 1));
             }
         });
 
@@ -92,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 imageView.setImageBitmap(bitmap);
+
+                textView.setText(String.format("%s / %s", num, list.length - 1));
             }
         });
     }
