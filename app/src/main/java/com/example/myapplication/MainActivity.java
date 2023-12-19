@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,10 +40,19 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     // TODO Auto-generated method stub
                     // 투표수 증가.
-                    voteCount[index]++;
-                    Toast.makeText(getApplicationContext(),
-                            imgName[index] + ": 총 " + voteCount[index] + " 표",
-                            Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder ab = new AlertDialog.Builder(MainActivity.this);
+                    ab.setTitle("투표하실 ?");
+                    ab.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            voteCount[index]++;
+                            Toast.makeText(getApplicationContext(),
+                                    imgName[index] + ": 총 " + voteCount[index] + " 표",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    ab.setNegativeButton("아니오", null);
+                    ab.show();
                 }
             });
         }
