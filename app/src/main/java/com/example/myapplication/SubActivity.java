@@ -16,10 +16,11 @@ public class SubActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String text = intent.getStringExtra("text");
         float number = intent.getFloatExtra("number", 0);
+        DataVO vo = intent.getParcelableExtra("data");
 
         AlertDialog.Builder ab = new AlertDialog.Builder(this);
-        ab.setTitle(text);
-        ab.setMessage(number + "");
+        ab.setTitle(vo.title);
+        ab.setMessage(vo.hit + "");
         ab.show();
     }
 }

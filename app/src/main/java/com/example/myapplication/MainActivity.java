@@ -19,7 +19,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, SubActivity.class);
                 intent.putExtra("text", "문장~~~~");
                 intent.putExtra("number", 23.24f);
-                
+                DataVO vo = new DataVO();
+                vo.title = "제목1";
+                vo.hit = 100;
+                intent.putExtra("data", vo);
                 startActivity(intent);
             }
         });
