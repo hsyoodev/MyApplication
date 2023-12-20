@@ -1,41 +1,44 @@
 package com.example.myapplication;
 
-import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    TextView tv;
+    MediaPlayer mp;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e("main", "create");
         setContentView(R.layout.activity_main);
 
-        tv = findViewById(R.id.tv);
-        tv.setOnClickListener(new View.OnClickListener() {
+        View view = findViewById(R.id.button);
+        Button button = (Button) view;
+
+        Button button2 = findViewById(R.id.button);
+
+        mp = MediaPlayer.create(MainActivity.this, R.raw.music);
+
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SubActivity.class);
-                startActivity(intent);
+            public void onClick(View view) {
+                // 기능 작성
+                System.out.println("버튼 클릭");
+                if (mp.isPlaying()) {
+                    mp.pause();
+                } else {
+                    mp.start();
+                }
             }
         });
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        Log.e("main", "resume");
-    }
-
-    @Override
     protected void onPause() {
         super.onPause();
-        Log.e("main", "pause");
+        mp.pause();
     }
 }
