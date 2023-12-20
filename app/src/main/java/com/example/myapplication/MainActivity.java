@@ -1,72 +1,46 @@
 package com.example.myapplication;
 
-import android.content.DialogInterface;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends Activity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle("명화 선호도 투표");
+        setTitle("메인 액티비티");
 
-        final int voteCount[] = new int[9];
-        for (int i = 0; i < 9; i++)
-            voteCount[i] = 0;
-        // 9개의 이미지 버튼 객체배열
-        ImageView image[] = new ImageView[9];
-        // 9개의 이미지버튼 ID 배열
-        Integer imageId[] = {R.id.iv1, R.id.iv2, R.id.iv3, R.id.iv4, R.id.iv5,
-                R.id.iv6, R.id.iv7, R.id.iv8, R.id.iv9};
-
-        final String imgName[] = {"독서하는 소녀", "꽃장식 모자 소녀", "부채를 든 소녀",
-                "이레느깡 단 베르양", "잠자는 소녀", "테라스의 두 자매", "피아노 레슨", "피아노 앞의 소녀들",
-                "해변에서"};
-        for (int i = 0; i < imageId.length; i++) {
-            final int index; // 주의! 꼭 필요함..
-            index = i;
-            image[index] = (ImageView) findViewById(imageId[index]);
-            image[index].setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    // TODO Auto-generated method stub
-                    // 투표수 증가.
-                    AlertDialog.Builder ab = new AlertDialog.Builder(MainActivity.this);
-                    ab.setTitle("투표하실 ?");
-                    ab.setPositiveButton("예", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            voteCount[index]++;
-                            Toast.makeText(getApplicationContext(),
-                                    imgName[index] + ": 총 " + voteCount[index] + " 표",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    ab.setNegativeButton("아니오", null);
-                    ab.show();
-                }
-            });
-        }
-
-        Button btnFinish = (Button) findViewById(R.id.btnResult);
-        btnFinish.setOnClickListener(new View.OnClickListener() {
+        Button btnNewActivity = (Button) findViewById(R.id.btnNewActivity);
+        btnNewActivity.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                EditText edtNum1 = (EditText) findViewById(R.id.edtNum1);
+                EditText edtNum2 = (EditText) findViewById(R.id.edtNum2);
+
                 Intent intent = new Intent(getApplicationContext(),
-                        ResultActivity.class);
-                intent.putExtra("VoteCount", voteCount);
-                intent.putExtra("ImageName", imgName);
-                startActivity(intent);
+                        SecondActivity.class);
+                intent.putExtra("Num1",
+                        Integer.parseInt(edtNum1.getText().toString()));
+                intent.putExtra("Num2",
+                        Integer.parseInt(edtNum2.getText().toString()));
+                startActivityForResult(intent, 0);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode == RESULT_OK) {
+            int hap = data.getIntExtra("Hap", 0);
+            Toast.makeText(getApplicationContext(), "합계 :" + hap,
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
