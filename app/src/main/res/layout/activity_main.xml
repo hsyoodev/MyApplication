@@ -1,48 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edtNum1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></EditText>
-
-    <EditText
-        android:id="@+id/edtNum2"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btnPhoto"
+        android:text="踰꾪듉"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <RadioButton
-            android:text="더하기"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <RadioButton
-            android:text="빼기"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <RadioButton
-            android:text="곱하기"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <RadioButton
-            android:text="나누기"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </RadioGroup>
-
-    <Button
-        android:id="@+id/btnNewActivity"
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="더하기" />
-
+        android:layout_height="match_parent" />
 </LinearLayout>
