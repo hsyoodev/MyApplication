@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,27 +16,36 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final ArrayList<String> midList = new ArrayList<String>();
-        ListView list = (ListView) findViewById(R.id.listView1);
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        list.add(6);
+        list.add(7);
+        list.add(8);
+        list.add(9);
+        list.add(10);
+        list.add(11);
+        list.add(12);
+        list.add(13);
+        list.add(14);
+        list.add(15);
+        list.add(16);
+        list.add(17);
+        list.add(18);
+        list.add(19);
+        list.add(20);
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, midList);
-        list.setAdapter(adapter);
+        ListView listView = findViewById(R.id.listView);
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, list);
+        listView.setAdapter(adapter);
 
-        final EditText edtItem = (EditText) findViewById(R.id.edtItem);
-        Button btnAdd = (Button) findViewById(R.id.btnAdd);
-
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                midList.add(edtItem.getText().toString());
-                adapter.notifyDataSetChanged();
-            }
-        });
-        
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                midList.remove(position);
+                list.remove(position);
                 adapter.notifyDataSetChanged();
             }
         });
