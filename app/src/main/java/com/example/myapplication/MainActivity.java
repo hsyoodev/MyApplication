@@ -1,15 +1,11 @@
 package com.example.myapplication;
 
-import android.app.AlertDialog;
-import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,74 +13,20 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle("그리드뷰 영화 포스터");
 
-        final GridView gv = (GridView) findViewById(R.id.gridView1);
-        MyGridAdapter gAdapter = new MyGridAdapter(this);
-        gv.setAdapter(gAdapter);
-    }
-
-    public class MyGridAdapter extends BaseAdapter {
-        Context context;
-
-        public MyGridAdapter(Context c) {
-            context = c;
-        }
-
-        public int getCount() {
-            return posterID.length;
-        }
-
-        public Object getItem(int position) {
-            // TODO Auto-generated method stub
-            return null;
-        }
-
-        public long getItemId(int position) {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-
-        Integer[] posterID = {R.drawable.mov01, R.drawable.mov02,
-                R.drawable.mov03, R.drawable.mov04, R.drawable.mov05,
-                R.drawable.mov06, R.drawable.mov07, R.drawable.mov08,
-                R.drawable.mov09, R.drawable.mov10, R.drawable.mov01,
-                R.drawable.mov02, R.drawable.mov03, R.drawable.mov04,
-                R.drawable.mov05, R.drawable.mov06, R.drawable.mov07,
-                R.drawable.mov08, R.drawable.mov09, R.drawable.mov10,
-                R.drawable.mov01, R.drawable.mov02, R.drawable.mov03,
-                R.drawable.mov04, R.drawable.mov05, R.drawable.mov06,
-                R.drawable.mov07, R.drawable.mov08, R.drawable.mov09,
-                R.drawable.mov10};
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ImageView imageview = new ImageView(context);
-            imageview.setLayoutParams(new GridView.LayoutParams(200, 300));
-            imageview.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            imageview.setPadding(5, 5, 5, 5);
-
-            imageview.setImageResource(posterID[position]);
-
-            final int pos = position;
-            imageview.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    View dialogView = (View) View.inflate(
-                            MainActivity.this, R.layout.dialog, null);
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(
-                            MainActivity.this);
-                    ImageView ivPoster = (ImageView) dialogView
-                            .findViewById(R.id.ivPoster);
-                    ivPoster.setImageResource(posterID[pos]);
-                    dlg.setTitle("큰 포스터");
-                    dlg.setIcon(R.drawable.ic_launcher_background);
-                    dlg.setView(dialogView);
-                    dlg.setNegativeButton("닫기", null);
-                    dlg.show();
-                }
-            });
-
-            return imageview;
-        }
-
+        ListView listView = findViewById(R.id.list_view);
+        ArrayList<ShopVO> shopList = new ArrayList<>();
+        ShopVO vo1 = new ShopVO(R.drawable.a, "한방왕족발", "도마에 가지런히 담긴 부드러운 족발");
+        shopList.add(vo1);
+        ShopVO vo2 = new ShopVO(R.drawable.b, "귀화식당", "제철 생선회와 다양한 요리가 있는 선술집");
+        shopList.add(vo2);
+        ShopVO vo3 = new ShopVO(R.drawable.c, "맛순대", "개금골목시장 대표 순대집");
+        shopList.add(vo3);
+        ShopVO vo4 = new ShopVO(R.drawable.d, "황산밀면", "밀면의 참맛을 느낄 수 있는 곳");
+        shopList.add(vo4);
+        ShopVO vo5 = new ShopVO(R.drawable.e, "무비오빠", "진한 멸치육수와 최고의 술안주가 있는 곳");
+        shopList.add(vo5);
+        ListViewAdapter listViewAdapter = new ListViewAdapter(this, R.layout.item, shopList);
+        listView.setAdapter(listViewAdapter);
     }
 }
