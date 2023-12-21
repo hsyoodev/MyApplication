@@ -16,7 +16,7 @@ public class CustomAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 10;
     }
 
     @Override
@@ -33,6 +33,11 @@ public class CustomAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.custom, null);
+        if (position % 3 == 0) {
+            view = inflater.inflate(R.layout.ad, null);
+        } else {
+            view = inflater.inflate(R.layout.custom, null);
+        }
         return view;
     }
 }
