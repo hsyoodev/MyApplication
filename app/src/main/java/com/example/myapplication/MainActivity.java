@@ -31,5 +31,9 @@ public class MainActivity extends AppCompatActivity {
                 ab.show();
             }
         });
+
+        ArrayAdapter adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, data);
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        listView.setAdapter(adapter2);
     }
 }
