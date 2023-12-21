@@ -1,38 +1,90 @@
 package com.example.myapplication;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
-import android.widget.ListView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
-    ListView listView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("그리드뷰 영화 포스터");
 
-        listView = findViewById(R.id.list_view);
-        List<Product> list = new ArrayList<>();
-        Product p = new Product();
-        p.setIcon(android.R.drawable.star_on);
-        p.setTitle("1번 물품");
-        p.setUrl("http://www.google.com");
-        list.add(p);
-        list.add(new Product(android.R.drawable.btn_star, "2번 물품", "http://www.naver.com"));
-        list.add(new Product(android.R.drawable.alert_light_frame, "3번 물품", "http://www.naver.com"));
-        list.add(new Product(android.R.drawable.star_big_off, "4번 물품", "http://www.naver.com"));
-        list.add(new Product(android.R.drawable.button_onoff_indicator_on, "5번 물품", "http://www.naver.com"));
-        list.add(new Product(android.R.drawable.arrow_up_float, "6번 물품", "http://www.naver.com"));
+        final GridView gv = (GridView) findViewById(R.id.gridView1);
+        MyGridAdapter gAdapter = new MyGridAdapter(this);
+        gv.setAdapter(gAdapter);
+    }
 
-        CustomAdapter adapter =
-                new CustomAdapter(
-                        this, R.layout.custom_listview, list);
+    public class MyGridAdapter extends BaseAdapter {
+        Context context;
 
-        listView.setAdapter(adapter);
+        public MyGridAdapter(Context c) {
+            context = c;
+        }
+
+        public int getCount() {
+            return posterID.length;
+        }
+
+        public Object getItem(int position) {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        public long getItemId(int position) {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        Integer[] posterID = {R.drawable.mov01, R.drawable.mov02,
+                R.drawable.mov03, R.drawable.mov04, R.drawable.mov05,
+                R.drawable.mov06, R.drawable.mov07, R.drawable.mov08,
+                R.drawable.mov09, R.drawable.mov10, R.drawable.mov01,
+                R.drawable.mov02, R.drawable.mov03, R.drawable.mov04,
+                R.drawable.mov05, R.drawable.mov06, R.drawable.mov07,
+                R.drawable.mov08, R.drawable.mov09, R.drawable.mov10,
+                R.drawable.mov01, R.drawable.mov02, R.drawable.mov03,
+                R.drawable.mov04, R.drawable.mov05, R.drawable.mov06,
+                R.drawable.mov07, R.drawable.mov08, R.drawable.mov09,
+                R.drawable.mov10};
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ImageView imageview = new ImageView(context);
+            imageview.setLayoutParams(new GridView.LayoutParams(200, 300));
+            imageview.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            imageview.setPadding(5, 5, 5, 5);
+
+            imageview.setImageResource(posterID[position]);
+
+            final int pos = position;
+            imageview.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    View dialogView = (View) View.inflate(
+                            MainActivity.this, R.layout.dialog, null);
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(
+                            MainActivity.this);
+                    ImageView ivPoster = (ImageView) dialogView
+                            .findViewById(R.id.ivPoster);
+                    ivPoster.setImageResource(posterID[pos]);
+                    dlg.setTitle("큰 포스터");
+                    dlg.setIcon(R.drawable.ic_launcher_background);
+                    dlg.setView(dialogView);
+                    dlg.setNegativeButton("닫기", null);
+                    dlg.show();
+                }
+            });
+
+            return imageview;
+        }
+
     }
 }
