@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.listView);
         String[] data = {"원피스", "나루토", " 블리치", "드래곤볼", "원피스", "나루토", " 블리치", "드래곤볼", "원피스", "나루토", " 블리치", "드래곤볼", "원피스", "나루토", " 블리치", "드래곤볼", "원피스", "나루토", " 블리치", "드래곤볼"};
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data);
+        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.custom, data);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -31,9 +31,5 @@ public class MainActivity extends AppCompatActivity {
                 ab.show();
             }
         });
-
-        ArrayAdapter adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, data);
-        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        listView.setAdapter(adapter2);
     }
 }
