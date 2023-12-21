@@ -1,34 +1,45 @@
 package com.example.myapplication;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
-
-    ListView listView;
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listView = findViewById(R.id.listView);
-        String[] data = {"원피스", "나루토", " 블리치", "드래곤볼", "원피스", "나루토", " 블리치", "드래곤볼", "원피스", "나루토", " 블리치", "드래곤볼", "원피스", "나루토", " 블리치", "드래곤볼", "원피스", "나루토", " 블리치", "드래곤볼"};
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.custom, data);
-        listView.setAdapter(adapter);
+        final ArrayList<String> midList = new ArrayList<String>();
+        ListView list = (ListView) findViewById(R.id.listView1);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, midList);
+        list.setAdapter(adapter);
+
+        final EditText edtItem = (EditText) findViewById(R.id.edtItem);
+        Button btnAdd = (Button) findViewById(R.id.btnAdd);
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                midList.add(edtItem.getText().toString());
+                adapter.notifyDataSetChanged();
+            }
+        });
+        
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AlertDialog.Builder ab = new AlertDialog.Builder(MainActivity.this);
-                ab.setTitle(data[position]);
-                ab.show();
+                midList.remove(position);
+                adapter.notifyDataSetChanged();
             }
         });
     }
