@@ -1,44 +1,35 @@
 package com.example.myapplication;
 
-import android.media.MediaPlayer;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    MediaPlayer mp;
+
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        View view = findViewById(R.id.button);
-        Button button = (Button) view;
+        listView = findViewById(R.id.listView);
+        String[] data = {"원피스", "나루토", " 블리치", "드래곤볼", "원피스", "나루토", " 블리치", "드래곤볼", "원피스", "나루토", " 블리치", "드래곤볼", "원피스", "나루토", " 블리치", "드래곤볼", "원피스", "나루토", " 블리치", "드래곤볼"};
+        ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data);
+        listView.setAdapter(adapter);
 
-        Button button2 = findViewById(R.id.button);
-
-        mp = MediaPlayer.create(MainActivity.this, R.raw.music);
-
-        button.setOnClickListener(new View.OnClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                // 기능 작성
-                System.out.println("버튼 클릭");
-                if (mp.isPlaying()) {
-                    mp.pause();
-                } else {
-                    mp.start();
-                }
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AlertDialog.Builder ab = new AlertDialog.Builder(MainActivity.this);
+                ab.setTitle(data[position]);
+                ab.show();
             }
         });
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mp.pause();
     }
 }
