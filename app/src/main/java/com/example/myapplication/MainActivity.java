@@ -1,59 +1,94 @@
 package com.example.myapplication;
 
-import android.content.DialogInterface;
+import android.content.Context;
 import android.os.Bundle;
-import android.widget.ListView;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.Gallery;
+import android.widget.ImageView;
+import android.widget.Toast;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    int position = -1;
+    String[] titles = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("갤러리 영화 포스터");
 
-        this.getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
+        ImageView ivPoster = (ImageView) findViewById(R.id.ivPoster);
+        ivPoster.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void handleOnBackPressed() {
-                AlertDialog.Builder ab = new AlertDialog.Builder(MainActivity.this);
-                ab.setMessage("종료할래?");
-                ab.setPositiveButton("예", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-                ab.setNegativeButton("아니오", null);
-                ab.show();
+            public boolean onTouch(View v, MotionEvent event) {
+                if (position != -1) {
+                    Toast.makeText(MainActivity.this, titles[position], Toast.LENGTH_SHORT).show();
+                }
+                return false;
             }
         });
 
-        ArrayList<ShopVO> list = new ArrayList<>();
-        ShopVO vo1 = new ShopVO(R.drawable.a, "한방왕족발", "도마에 가지런히 담긴 부드러운 족발");
-        list.add(vo1);
-        ShopVO vo2 = new ShopVO(R.drawable.b, "귀화식당", "제철 생선회와 다양한 요리가 있는 선술집");
-        list.add(vo2);
-        ShopVO vo3 = new ShopVO(R.drawable.c, "맛순대", "개금골목시장 대표 순대집");
-        list.add(vo3);
-        ShopVO vo4 = new ShopVO(R.drawable.d, "황산밀면", "밀면의 참맛을 느낄 수 있는 곳");
-        list.add(vo4);
-        ShopVO vo5 = new ShopVO(R.drawable.e, "무비오빠", "진한 멸치육수와 최고의 술안주가 있는 곳");
-        list.add(vo5);
+        Gallery gallery = (Gallery) findViewById(R.id.gallery1);
+        gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MainActivity.this.position = position;
+            }
+        });
 
-        for (int i = 0; i < 1000; i++) {
-            ShopVO vo55 = new ShopVO(R.drawable.e, "무비오빠" + i, "진한 멸치육수와 최고의 술안주가 있는 곳");
-            list.add(vo55);
-        }
-
-        ListView listView = findViewById(R.id.list_view);
-        ListViewAdapter adapter = new ListViewAdapter(
-                this, R.layout.item, list);
-        listView.setAdapter(adapter);
+        MyGalleryAdapter galAdapter = new MyGalleryAdapter(this);
+        gallery.setAdapter(galAdapter);
     }
 
+    public class MyGalleryAdapter extends BaseAdapter {
+
+        Context context;
+        Integer[] posterID = {R.drawable.mov11, R.drawable.mov12,
+                R.drawable.mov13, R.drawable.mov14, R.drawable.mov15,
+                R.drawable.mov16, R.drawable.mov17, R.drawable.mov18,
+                R.drawable.mov19, R.drawable.mov20};
+
+        public MyGalleryAdapter(Context c) {
+            context = c;
+        }
+
+        public int getCount() {
+            return posterID.length;
+        }
+
+        public Object getItem(int arg0) {
+            return null;
+        }
+
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ImageView imageview = new ImageView(context);
+            imageview.setLayoutParams(new Gallery.LayoutParams(200, 300));
+            imageview.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            imageview.setPadding(5, 5, 5, 5);
+            imageview.setImageResource(posterID[position]);
+
+            final int pos = position;
+            imageview.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    ImageView ivPoster = (ImageView) findViewById(R.id.ivPoster);
+                    ivPoster.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    ivPoster.setImageResource(posterID[pos]);
+                    return false;
+                }
+            });
+
+            return imageview;
+        }
+    }
 }
