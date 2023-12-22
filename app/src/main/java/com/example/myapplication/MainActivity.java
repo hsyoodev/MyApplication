@@ -1,94 +1,52 @@
 package com.example.myapplication;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.Gallery;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-
-    int position = -1;
-    String[] titles = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle("갤러리 영화 포스터");
+        setTitle("스피너 테스트");
 
-        ImageView ivPoster = (ImageView) findViewById(R.id.ivPoster);
-        ivPoster.setOnTouchListener(new View.OnTouchListener() {
+        final String[] movie = {"쿵푸팬더", "짱구는 못말려", "아저씨", "아바타", "대부", "국가대표",
+                "토이스토리3", "마당을 나온 암탉", "죽은 시인의 사회", "서유기"};
+        final int[] posters = {R.drawable.mov01, R.drawable.mov02, R.drawable.mov03, R.drawable.mov04, R.drawable.mov05, R.drawable.mov06, R.drawable.mov07, R.drawable.mov08, R.drawable.mov09, R.drawable.mov10};
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner1);
+        ArrayAdapter<String> adapter;
+        adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, movie);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (position != -1) {
-                    Toast.makeText(MainActivity.this, titles[position], Toast.LENGTH_SHORT).show();
-                }
-                return false;
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ImageView imageView = findViewById(R.id.image_view);
+                imageView.setImageResource(posters[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
-        Gallery gallery = (Gallery) findViewById(R.id.gallery1);
-        gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        Button button = findViewById(R.id.q2);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                MainActivity.this.position = position;
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SubActivity.class);
+                startActivity(intent);
             }
         });
-
-        MyGalleryAdapter galAdapter = new MyGalleryAdapter(this);
-        gallery.setAdapter(galAdapter);
-    }
-
-    public class MyGalleryAdapter extends BaseAdapter {
-
-        Context context;
-        Integer[] posterID = {R.drawable.mov11, R.drawable.mov12,
-                R.drawable.mov13, R.drawable.mov14, R.drawable.mov15,
-                R.drawable.mov16, R.drawable.mov17, R.drawable.mov18,
-                R.drawable.mov19, R.drawable.mov20};
-
-        public MyGalleryAdapter(Context c) {
-            context = c;
-        }
-
-        public int getCount() {
-            return posterID.length;
-        }
-
-        public Object getItem(int arg0) {
-            return null;
-        }
-
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ImageView imageview = new ImageView(context);
-            imageview.setLayoutParams(new Gallery.LayoutParams(200, 300));
-            imageview.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            imageview.setPadding(5, 5, 5, 5);
-            imageview.setImageResource(posterID[position]);
-
-            final int pos = position;
-            imageview.setOnTouchListener(new View.OnTouchListener() {
-                public boolean onTouch(View v, MotionEvent event) {
-                    ImageView ivPoster = (ImageView) findViewById(R.id.ivPoster);
-                    ivPoster.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                    ivPoster.setImageResource(posterID[pos]);
-                    return false;
-                }
-            });
-
-            return imageview;
-        }
     }
 }
