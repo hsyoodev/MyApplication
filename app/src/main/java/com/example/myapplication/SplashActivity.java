@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,9 +20,18 @@ public class SplashActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                Intent intent = new Intent(
+                        SplashActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         }).start();
     }
 }
+
+
+
+
+
+
+
