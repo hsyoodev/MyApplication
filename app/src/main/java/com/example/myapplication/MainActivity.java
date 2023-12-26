@@ -19,36 +19,19 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        db = helper.getReadableDatabase();
-        lastLoginEndDate = findViewById(R.id.last_login_end_date);
-        Cursor cursor = db.rawQuery("SELECT id, date_time FROM history ORDER BY date_time DESC", null);
-        String dateTime = "";
-        while (cursor.moveToNext()) {
-            dateTime = cursor.getString(1);
-            break;
-        }
-        lastLoginEndDate.setText(dateTime);
+        helper.select();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        db = helper.getReadableDatabase();
-        lastLoginEndDate = findViewById(R.id.last_login_end_date);
-        Cursor cursor = db.rawQuery("SELECT id, date_time FROM history ORDER BY date_time DESC", null);
-        String dateTime = "";
-        while (cursor.moveToNext()) {
-            dateTime = cursor.getString(1);
-            break;
-        }
-        lastLoginEndDate.setText(dateTime);
+        helper.select();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        db = helper.getWritableDatabase();
-        db.execSQL("INSERT INTO history (id, date_time) VALUES (NULL, (datetime('now', 'localtime')))");
+        helper.insert();
     }
 
     public class myDBHelper extends SQLiteOpenHelper {
@@ -62,6 +45,22 @@ public class MainActivity extends AppCompatActivity {
             db.execSQL("CREATE TABLE history (\n" +
                     "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                     "    date_time TEXT);");
+        }
+
+        public void select() {
+            db = getReadableDatabase();
+            lastLoginEndDate = findViewById(R.id.last_login_end_date);
+            Cursor cursor = db.rawQuery("SELECT id, date_time FROM history ORDER BY date_time DESC", null);
+            if (cursor.moveToNext()) {
+                lastLoginEndDate.setText(cursor.getString(1));
+            }
+            db.close();
+        }
+
+        public void insert() {
+            db = getWritableDatabase();
+            db.execSQL("INSERT INTO history (id, date_time) VALUES (NULL, (datetime('now', 'localtime')))");
+            db.close();
         }
 
         @Override
