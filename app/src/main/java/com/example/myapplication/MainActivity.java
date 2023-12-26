@@ -8,11 +8,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
+    List<Group> list = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,8 +28,7 @@ public class MainActivity extends AppCompatActivity {
         EditText edtName = findViewById(R.id.edtName);
         EditText edtNumber = findViewById(R.id.edtNumber);
         Button btnSelect = findViewById(R.id.btnSelect);
-        EditText edtNameResult = findViewById(R.id.edtNameResult);
-        EditText edtNumberResult = findViewById(R.id.edtNumberResult);
+        ListView listView = findViewById(R.id.list_view);
         btnInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,16 +43,17 @@ public class MainActivity extends AppCompatActivity {
         btnSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                list.clear();
                 SQLiteDatabase db = helper.getWritableDatabase();
                 Cursor cursor = db.rawQuery("select gName, gNumber from groupDB", null);
-                String gName = "";
-                String gNumber = "";
                 while (cursor.moveToNext()) {
-                    gName += cursor.getString(0) + "\n";
-                    gNumber += cursor.getString(1) + "\n";
+                    String gName = cursor.getString(0);
+                    int gNumber = cursor.getInt(1);
+                    Group group = new Group(gName, gNumber);
+                    list.add(group);
                 }
-                edtNameResult.setText(gName);
-                edtNumberResult.setText(gNumber);
+                CustomAdapter customAdapter = new CustomAdapter(MainActivity.this, R.layout.item, list);
+                listView.setAdapter(customAdapter);
                 cursor.close();
                 db.close();
             }
