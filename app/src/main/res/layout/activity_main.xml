@@ -1,29 +1,11 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:layout_height="match_parent">
 
     <TextView
-        android:textSize="25dp"
-        android:text="최근 접속 종료 일시"
-        android:padding="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:text="접속일시"
-        android:textSize="15dp"
-        android:textStyle="bold"
-        android:textColor="#ff0000"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="15dp" />
-
-    <TextView
-        android:textSize="20dp"
-        android:padding="15dp"
-        android:id="@+id/last_login_end_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="20sp" />
+</ScrollView>
