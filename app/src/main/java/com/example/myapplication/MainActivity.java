@@ -1,67 +1,132 @@
 package com.example.myapplication;
 
-import android.content.SharedPreferences;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.widget.CheckBox;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
-    SharedPreferences sp;
-    EditText editId;
-    EditText editName;
-    CheckBox checkAgree;
-    TextView textView;
+    DatePicker dp;
+    EditText edtDiary;
+    Button btnWrite;
+    myDBHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        editId = (EditText) findViewById(R.id.edit_id);
-        editName = (EditText) findViewById(R.id.edit_name);
-        checkAgree = (CheckBox) findViewById(R.id.check_agree);
-        sp = getSharedPreferences("myData", MODE_PRIVATE);
-        textView = findViewById(R.id.date);
+
+        helper = new myDBHelper(this);
+
+        dp = findViewById(R.id.datePicker1);
+        edtDiary = findViewById(R.id.edtDiary);
+        btnWrite = findViewById(R.id.btnWrite);
+
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        String fileName = year + "_" + (month + 1) + "_" + day + ".txt";
+        try {
+//      FileInputStream inFs = openFileInput(fileName);
+            FileInputStream inFs = new FileInputStream("/sdcard/myDiary/" + fileName);
+
+            byte[] buf = new byte[4096];
+            inFs.read(buf);
+
+            inFs.close();
+            String text = new String(buf);
+            edtDiary.setText(text);
+            Log.w("text", text);
+        } catch (FileNotFoundException e) {
+            Log.w("예외", "파일 없음");
+            edtDiary.setText("");
+            edtDiary.setHint("파일 없음, 내용을 작성해주세요");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        dp.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker view,
+                                      int year, int monthOfYear, int dayOfMonth) {
+                Log.w("date", "" + year + (monthOfYear + 1) + dayOfMonth);
+                String fileName = year + "_" + (monthOfYear + 1) + "_" + dayOfMonth + ".txt";
+                try {
+//          FileInputStream inFs = openFileInput(fileName);
+                    FileInputStream inFs = new FileInputStream("/sdcard/myDiary/" + fileName);
+
+                    byte[] buf = new byte[4096];
+                    inFs.read(buf);
+
+                    inFs.close();
+                    String text = new String(buf);
+                    edtDiary.setText(text);
+                    Log.w("text", text);
+                } catch (FileNotFoundException e) {
+                    Log.w("예외", "파일 없음");
+                    edtDiary.setText("");
+                    edtDiary.setHint("파일 없음, 내용을 작성해주세요");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        btnWrite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int year = dp.getYear();
+                int month = dp.getMonth() + 1;
+                int day = dp.getDayOfMonth();
+                String content = edtDiary.getText().toString();
+
+                helper.insert(year, month, day, content);
+            }
+        });
+
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        String id = sp.getString("id", "");
-        String name = sp.getString("name", "");
-        boolean isAgree = sp.getBoolean("isAgree", false);
-        String date = sp.getString("date", "");
-        editId.setText(id);
-        editName.setText(name);
-        checkAgree.setChecked(isAgree);
-        textView.setText(date);
+    public class myDBHelper extends SQLiteOpenHelper {
+        public myDBHelper(Context context) {
+            super(context, "diary.db", null, 1);
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+            db.execSQL("create table diary (" +
+                    "id integer primary key autoincrement, " +
+                    "year text, month text, date text, content text)");
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        }
+
+        public void insert(
+                int year, int month, int date, String content) {
+            SQLiteDatabase db = getWritableDatabase();
+            db.execSQL("insert into diary values (" +
+                    "null, '" + year + "', " +
+                    "'" + month + "', " +
+                    "'" + date + "', " +
+                    "'" + content + "')");
+            db.close();
+        }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        String id = editId.getText().toString();
-        String name = editName.getText().toString();
-        boolean isAgree = checkAgree.isChecked();
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("id", id);
-        editor.putString("name", name);
-        editor.putBoolean("isAgree", isAgree);
-        editor.commit();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Date now = new Date();
-        SharedPreferences.Editor editor = sp.edit();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY년 MM월 dd일 HH시 mm분 ss초");
-        editor.putString("date", simpleDateFormat.format(now));
-        editor.commit();
-    }
 }
