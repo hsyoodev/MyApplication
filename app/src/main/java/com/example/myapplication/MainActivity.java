@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
@@ -12,9 +13,6 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,25 +36,12 @@ public class MainActivity extends AppCompatActivity {
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
-
-        String fileName = year + "_" + (month + 1) + "_" + day + ".txt";
-        try {
-//      FileInputStream inFs = openFileInput(fileName);
-            FileInputStream inFs = new FileInputStream("/sdcard/myDiary/" + fileName);
-
-            byte[] buf = new byte[4096];
-            inFs.read(buf);
-
-            inFs.close();
-            String text = new String(buf);
-            edtDiary.setText(text);
-            Log.w("text", text);
-        } catch (FileNotFoundException e) {
-            Log.w("예외", "파일 없음");
+        String content = helper.select(year, (month + 1), day);
+        if (content.isEmpty()) {
+            edtDiary.setHint("내용 없음");
             edtDiary.setText("");
-            edtDiary.setHint("파일 없음, 내용을 작성해주세요");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } else {
+            edtDiary.setText(content);
         }
 
         dp.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
@@ -64,24 +49,12 @@ public class MainActivity extends AppCompatActivity {
             public void onDateChanged(DatePicker view,
                                       int year, int monthOfYear, int dayOfMonth) {
                 Log.w("date", "" + year + (monthOfYear + 1) + dayOfMonth);
-                String fileName = year + "_" + (monthOfYear + 1) + "_" + dayOfMonth + ".txt";
-                try {
-//          FileInputStream inFs = openFileInput(fileName);
-                    FileInputStream inFs = new FileInputStream("/sdcard/myDiary/" + fileName);
-
-                    byte[] buf = new byte[4096];
-                    inFs.read(buf);
-
-                    inFs.close();
-                    String text = new String(buf);
-                    edtDiary.setText(text);
-                    Log.w("text", text);
-                } catch (FileNotFoundException e) {
-                    Log.w("예외", "파일 없음");
+                String content = helper.select(year, (monthOfYear + 1), dayOfMonth);
+                if (content.isEmpty()) {
+                    edtDiary.setHint("내용 없음");
                     edtDiary.setText("");
-                    edtDiary.setHint("파일 없음, 내용을 작성해주세요");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                } else {
+                    edtDiary.setText(content);
                 }
             }
         });
@@ -126,6 +99,16 @@ public class MainActivity extends AppCompatActivity {
                     "'" + date + "', " +
                     "'" + content + "')");
             db.close();
+        }
+
+        public String select(int year, int month, int date) {
+            SQLiteDatabase db = getReadableDatabase();
+            Cursor cursor = db.rawQuery(String.format("SELECT CONTENT FROM diary WHERE year=%s AND month=%s AND date=%s", year, month, date), null);
+            String result = "";
+            if (cursor.moveToNext()) {
+                result = cursor.getString(0);
+            }
+            return result;
         }
     }
 
