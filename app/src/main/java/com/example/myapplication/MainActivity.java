@@ -1,78 +1,74 @@
 package com.example.myapplication;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.BatteryManager;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
+
 public class MainActivity extends AppCompatActivity {
-    ImageView ivBattery;
-    EditText edtBattery;
+
+    TextView textView;
+    EditText editText;
+    Button button;
+    PrintWriter printWriter;
+    String host = "192.168.0.156";
+    int port = 80;
+    Socket socket;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle("배터리 상태 체크");
 
-        ivBattery = (ImageView) findViewById(R.id.ivBattery);
-        edtBattery = (EditText) findViewById(R.id.edtBattery);
+        textView = findViewById(R.id.text_view);
+        editText = findViewById(R.id.edit_text);
+        button = findViewById(R.id.button);
 
-    }
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String data = editText.getText().toString();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        printWriter.println(data);
+                    }
+                }).start();
+            }
+        });
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        unregisterReceiver(br);
-    }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    socket = new Socket(host, port);
+                    OutputStream outputStream = socket.getOutputStream();
+                    printWriter = new PrintWriter(outputStream, true);
+                    printWriter.println("Chat GPT");
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        IntentFilter iFilter = new IntentFilter();
-        iFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
-        registerReceiver(br, iFilter);
-    }
-
-    BroadcastReceiver br = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-
-            if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
-                int remain = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
-                edtBattery.setText("현재 충전량 : " + remain + "\n");
-
-                if (remain >= 90)
-                    ivBattery.setImageResource(R.drawable.battery_100);
-                else if (remain >= 70)
-                    ivBattery.setImageResource(R.drawable.battery_80);
-                else if (remain >= 50)
-                    ivBattery.setImageResource(R.drawable.battery_60);
-                else if (remain >= 10)
-                    ivBattery.setImageResource(R.drawable.battery_20);
-                else
-                    ivBattery.setImageResource(R.drawable.battery_0);
-
-                int plug = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0);
-                switch (plug) {
-                    case 0:
-                        edtBattery.append("전원 연결 : 안됨");
-                        break;
-                    case BatteryManager.BATTERY_PLUGGED_AC:
-                        edtBattery.append("전원 연결 : 어댑터 연결됨");
-                        break;
-                    case BatteryManager.BATTERY_PLUGGED_USB:
-                        edtBattery.append("전원 연결 : USB 연결됨");
-                        break;
+                    InputStream in = socket.getInputStream();
+                    BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                    while (true) {
+                        String data = br.readLine();
+                        textView.append(data + "\n");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException();
                 }
             }
-        }
-    };
+        }).start();
+    }
 }
