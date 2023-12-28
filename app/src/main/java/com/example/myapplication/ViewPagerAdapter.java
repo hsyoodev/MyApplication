@@ -24,4 +24,10 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return 5;
     }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return "TITLE : " + position;
+    }
 }
+

@@ -5,7 +5,6 @@
     android:gravity="center">
 
     <TextView
-        android:textSize="50sp"
         android:id="@+id/text"
         android:text="Fragment"
         android:layout_width="wrap_content"
