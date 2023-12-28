@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -12,7 +14,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         MyFragment mf = new MyFragment();
-
+        Bundle bundle = new Bundle();
+        bundle.putInt("position", position);
+        mf.setArguments(bundle);
         return mf;
     }
 
