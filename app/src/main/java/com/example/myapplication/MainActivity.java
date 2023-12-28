@@ -1,48 +1,39 @@
 package com.example.myapplication;
 
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
-import android.view.ViewGroup;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import net.daum.mf.map.api.MapView;
-
-import java.security.MessageDigest;
-
 public class MainActivity extends AppCompatActivity {
+
+    Intent intent;
+    Button btnStart, btnStop;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("서비스 테스트 예제");
 
-        getAppKeyHash();
+        intent = new Intent(this, MusicService.class);
+        btnStart = (Button) findViewById(R.id.btnStart);
+        btnStop = (Button) findViewById(R.id.btnStop);
 
-        MapView mapView = new MapView(this);
-
-        ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
-        mapViewContainer.addView(mapView);
-    }
-
-    private void getAppKeyHash() {
-        try {
-            PackageInfo info =
-                    getPackageManager().getPackageInfo(
-                            getPackageName(), PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md;
-                md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                String something = new String(Base64.encode(md.digest(), 0));
-                Log.e("Hash key", something);
+        btnStart.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startService(intent);
+                android.util.Log.i("서비스 테스트", "startService()");
             }
-        } catch (Exception e) {
-            Log.e("name not found", e.toString());
-        }
-    }
+        });
 
+        btnStop.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                stopService(intent);
+                android.util.Log.i("서비스 테스트", "stopService()");
+            }
+        });
+    }
 }
