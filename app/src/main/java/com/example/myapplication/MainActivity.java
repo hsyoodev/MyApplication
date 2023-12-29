@@ -1,7 +1,7 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 URL url = null;
                 try {
-                    url = new URL("http://ggoreb.com/api/idol.jsp");
+                    url = new URL("http://ggoreb.com/api/youtube.jsp");
                     URLConnection conn = url.openConnection();
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     String json = "";
@@ -38,12 +38,17 @@ public class MainActivity extends AppCompatActivity {
                         json += line;
                     }
                     ObjectMapper objectMapper = new ObjectMapper();
-                    List<Map<String, String>> idols = objectMapper.readValue(json, List.class);
-                    for (Map<String, String> idol : idols) {
-                        String name = idol.get("name");
-                        String agency = idol.get("agency");
-                        Log.w("idol", String.format("name : %s, agency : %s", name, agency));
-                    }
+                    Map<String, Object> youtubes = objectMapper.readValue(json, Map.class);
+                    List<Map<String, Object>> items = (List<Map<String, Object>>) youtubes.get("items");
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ListView listView = findViewById(R.id.list_view);
+                            CustomAdapter customAdapter = new CustomAdapter(MainActivity.this, R.layout.item, items);
+                            listView.setAdapter(customAdapter);
+                        }
+                    });
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
