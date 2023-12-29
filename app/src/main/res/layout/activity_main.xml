@@ -8,13 +8,19 @@
     <TextView
         android:textSize="30sp"
         android:id="@+id/text"
-        android:text="1"
+        android:text="00:00:00"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/start"
         android:text="시작"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/stop"
+        android:text="중지"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>
